@@ -9,17 +9,19 @@ import java.util.Objects;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private final Resume[] storage = new Resume[10000];
+    private final int STORAGE_LIMIT = 10000;
+    private final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
+        size = 0;
     }
 
     public void save(Resume resume) {
         if (size >= 10000) {
             System.out.println("Для резюме: " + resume.getUuid() + " нет места!!!");
-        } else if (resumeIsExist(resume)) {
+        } else if (isExist(getIndex(resume.getUuid()))) {
             System.out.println("Резюме: " + resume.getUuid() + " уже создано!!!");
         } else {
             storage[size] = resume;
@@ -28,7 +30,7 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        if (!resumeIsExist(resume)) {
+        if (!isExist(getIndex(resume.getUuid()))) {
             System.out.println("Резюме " + resume.getUuid() + " не найдено");
         } else {
             resume.setUuid(resume.getUuid() + " updated");
@@ -37,7 +39,7 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        if (resumeIsExistByUuid(uuid)) {
+        if (isExist(getIndex(uuid))) {
             for (int i = 0; i < size; i++) {
                 if (Objects.equals(storage[i].getUuid(), uuid)) {
                     return storage[i];
@@ -49,11 +51,9 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        if (resumeIsExistByUuid(uuid)) {
-            int index = getIndex(uuid);
-            int lastResumeIndex = size - 1;
-            storage[index] = storage[lastResumeIndex];
-            storage[lastResumeIndex] = null;
+        if (isExist(getIndex(uuid))) {
+            storage[getIndex(uuid)] = storage[size - 1];
+            storage[size - 1] = null;
             size--;
         } else {
             System.out.println("Резюме " + uuid + " не найдено");
@@ -80,11 +80,7 @@ public class ArrayStorage {
         return -1;
     }
 
-    private boolean resumeIsExist(Resume resume) {
-        return getIndex(resume.getUuid()) != -1;
-    }
-
-    private boolean resumeIsExistByUuid(String uuid) {
-        return getIndex(uuid) != -1;
+    private boolean isExist(int index) {
+        return index != -1;
     }
 }
