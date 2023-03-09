@@ -5,15 +5,15 @@ import com.urise.webapp.model.Resume;
 public interface Storage {
     void clear();
 
-    void update(Resume r);
-
-    void save(Resume r);
+    Resume[] getAll();
 
     Resume get(String uuid);
 
-    void delete(String uuid);
+    void save(Resume resume);
 
-    Resume[] getAll();
+    void update(Resume resume);
+
+    void delete(String uuid);
 
     int size();
 }

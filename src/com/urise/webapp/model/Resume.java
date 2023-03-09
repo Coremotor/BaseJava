@@ -1,11 +1,7 @@
 package com.urise.webapp.model;
 
-/**
- * Initial resume class
- */
 public class Resume implements Comparable<Resume> {
 
-    // Unique identifier
     private String uuid;
 
     @Override

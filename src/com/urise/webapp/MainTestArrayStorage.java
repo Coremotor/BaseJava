@@ -4,9 +4,6 @@ import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.AbstractArrayStorage;
 import com.urise.webapp.storage.SortedArrayStorage;
 
-/**
- * Test for your com.urise.webapp.storage.ArrayStorage implementation
- */
 public class MainTestArrayStorage {
     static final AbstractArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
 
