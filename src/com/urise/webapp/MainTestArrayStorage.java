@@ -1,11 +1,10 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.AbstractArrayStorage;
-import com.urise.webapp.storage.ArrayStorage;
+import com.urise.webapp.storage.ListStorage;
 
 public class MainTestArrayStorage {
-    static final AbstractArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    static final ListStorage ARRAY_STORAGE = new ListStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume("uuid1");
@@ -22,7 +21,11 @@ public class MainTestArrayStorage {
         System.out.println("\nGet r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
-        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
+        try {
+            System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
+        } catch (Exception ignored) {
+            System.out.println("Резюме не найдено.");
+        }
 
         System.out.println("Update r1");
         ARRAY_STORAGE.update(r1);
