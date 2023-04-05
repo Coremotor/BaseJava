@@ -1,6 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exeption.ExistStorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
@@ -11,41 +10,38 @@ public class ListStorage extends AbstractStorage {
 
     List<Resume> storage = new ArrayList<>();
 
-    public void saveResume(Resume resume) {
+    protected void doSave(Resume resume, Object searchKey) {
         storage.add(resume);
     }
 
-    public Resume getResume(String uuid) {
-        return storage.get(getIndex(uuid));
+    public Resume doGet(Object searchKey) {
+        int index = (int) searchKey;
+        return storage.get(index);
     }
 
-    public Resume[] getAllResume() {
+    public Resume[] getAll() {
         return Arrays.copyOf(storage.toArray(), storage.size(), Resume[].class);
     }
 
-    public void setResume(Resume resume, int index) {
+    public void doUpdate(Resume resume, Object searchKey) {
+        int index = (int) searchKey;
         storage.set(index, resume);
     }
 
-    public void deleteResume(String uuid) {
-        storage.remove(getIndex(uuid));
+    public void doDelete(Object searchKey) {
+        int index = (int) searchKey;
+        storage.remove(index);
     }
 
-    public void deleteAllResume() {
+    public void clear() {
         storage.clear();
     }
 
-    public int getSizeStorage() {
+    public int size() {
         return storage.size();
     }
 
-    protected void checkExistResume(Resume resume) {
-        if (storage.contains(resume)) {
-            throw new ExistStorageException(resume.getUuid());
-        }
-    }
-
-    protected final int getIndex(String uuid) {
+    protected Object getSearchKey(String uuid) {
         int size = storage.size();
         for (int i = 0; i < size; i++) {
             if (storage.get(i).getUuid().equals(uuid)) {
@@ -53,6 +49,11 @@ public class ListStorage extends AbstractStorage {
             }
         }
         return -1;
+    }
+
+    protected boolean isExist(Object searchKey) {
+        int index = (int) searchKey;
+        return index >= 0;
     }
 
 }

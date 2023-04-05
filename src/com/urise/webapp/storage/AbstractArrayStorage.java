@@ -1,6 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exeption.ExistStorageException;
 import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
 
@@ -12,50 +11,50 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size;
 
-    public void saveResume(Resume resume) {
+    public void doSave(Resume resume, Object searchKey) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", resume.getUuid());
         }
-        int index = getIndex(resume.getUuid());
+        int index = (int) searchKey;
         addResume(resume, index);
         size++;
     }
 
-    public Resume getResume(String uuid) {
-        int index = getIndex(uuid);
+    public Resume doGet(Object searchKey) {
+        int index = (int) searchKey;
         return storage[index];
     }
 
-    public Resume[] getAllResume() {
+    public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
 
-    public void setResume(Resume resume, int index) {
+    public void doUpdate(Resume resume, Object searchKey) {
+        int index = (int) searchKey;
         storage[index] = resume;
     }
 
-    public void deleteResume(String uuid) {
-        int index = getIndex(uuid);
+    public void doDelete(Object searchKey) {
+        int index = (int) searchKey;
         removeResume(index);
         size--;
     }
 
-    public void deleteAllResume() {
+    @Override
+    public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    public int getSizeStorage() {
+    public int size() {
         return size;
     }
 
-    protected void checkExistResume(Resume resume) {
-        if (getIndex(resume.getUuid()) >= 0) {
-            throw new ExistStorageException(resume.getUuid());
-        }
+    @Override
+    protected boolean isExist(Object searchKey) {
+        int index = (int) searchKey;
+        return index >= 0;
     }
-
-    protected abstract int getIndex(String uuid);
 
     protected abstract void addResume(Resume resume, int index);
 

@@ -2,12 +2,10 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.util.Objects;
-
 public class ArrayStorage extends AbstractArrayStorage {
-    protected final int getIndex(String uuid) {
+    protected Object getSearchKey(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (Objects.equals(storage[i].getUuid(), uuid)) {
+            if (storage[i].getUuid().equals(uuid)) {
                 return i;
             }
         }
