@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
-    Map<String, Resume> storage = new HashMap<>();
+    private final Map<String, Resume> storage = new HashMap<>();
 
     protected void doSave(Resume resume, Object searchKey) {
         storage.put(resume.getUuid(), resume);
@@ -41,10 +41,10 @@ public class MapStorage extends AbstractStorage {
     }
 
     protected boolean isExist(Object searchKey) {
-        return searchKey != null;
+        return storage.containsKey(searchKey);
     }
 
     protected Object getSearchKey(String key) {
-        return storage.containsKey(key) ? key : null;
+        return key;
     }
 }
