@@ -2,11 +2,13 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class MapStorage extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage {
+
     private final Map<String, Resume> storage = new HashMap<>();
 
     protected void doSave(Resume resume, Object searchKey) {
@@ -14,22 +16,21 @@ public class MapStorage extends AbstractStorage {
     }
 
     protected Resume doGet(Object searchKey) {
-        String key = (String) searchKey;
-        return storage.get(key);
+        Resume resume = (Resume) searchKey;
+        return storage.get(resume.getUuid());
     }
 
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage.values().toArray(), storage.size(), Resume[].class);
+    protected List<Resume> doGetStorage() {
+        return new ArrayList<>(storage.values());
     }
 
     protected void doUpdate(Resume resume, Object searchKey) {
-        String key = (String) searchKey;
-        storage.put(key, resume);
+        storage.put(resume.getUuid(), resume);
     }
 
     protected void doDelete(Object searchKey) {
-        String key = (String) searchKey;
-        storage.remove(key);
+        Resume resume = (Resume) searchKey;
+        storage.remove(resume.getUuid());
     }
 
     public void clear() {
@@ -41,10 +42,10 @@ public class MapStorage extends AbstractStorage {
     }
 
     protected boolean isExist(Object searchKey) {
-        return storage.containsKey(searchKey);
+        return searchKey != null;
     }
 
-    protected Object getSearchKey(String key) {
-        return key;
+    protected Object getSearchKey(String uuid) {
+        return storage.get(uuid);
     }
 }

@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class MainReflection {
     public static void main(String[] args) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        Resume resume = new Resume();
+        Resume resume = new Resume("Ilon Mask");
         System.out.println(resume.getClass().getMethod("toString").invoke(resume));
     }
 }

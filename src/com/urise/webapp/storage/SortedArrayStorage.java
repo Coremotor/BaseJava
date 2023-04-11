@@ -3,11 +3,13 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
     protected Object getSearchKey(String uuid) {
-        return Arrays.binarySearch(storage, 0, size, new Resume(uuid));
+        Resume searchResume = new Resume(uuid, "Iron Man");
+        return Arrays.binarySearch(storage, 0, size, searchResume, Comparator.comparing(Resume::getUuid));
     }
 
     protected final void addResume(Resume resume, int index) {

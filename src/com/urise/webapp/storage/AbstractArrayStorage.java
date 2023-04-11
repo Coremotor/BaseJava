@@ -4,16 +4,17 @@ import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
 
-    protected final int STORAGE_LIMIT = 10000;
+    protected static final int STORAGE_LIMIT = 10000;
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size;
 
     public void doSave(Resume resume, Object searchKey) {
         if (size >= STORAGE_LIMIT) {
-            throw new StorageException("Storage overflow", resume.getUuid());
+            throw new StorageException("Хранилище переполнено", resume.getUuid());
         }
         int index = (int) searchKey;
         addResume(resume, index);
@@ -25,8 +26,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return storage[index];
     }
 
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+    protected List<Resume> doGetStorage() {
+        return Arrays.asList(Arrays.copyOf(storage, size));
     }
 
     public void doUpdate(Resume resume, Object searchKey) {
@@ -40,7 +41,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size--;
     }
 
-    @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
@@ -50,7 +50,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    @Override
     protected boolean isExist(Object searchKey) {
         int index = (int) searchKey;
         return index >= 0;
