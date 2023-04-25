@@ -6,13 +6,13 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     protected static final int STORAGE_LIMIT = 10000;
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size;
 
-    public void doSave(Resume resume, Object searchKey) {
+    public void doSave(Resume resume, Integer searchKey) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Хранилище переполнено", resume.getUuid());
         }
@@ -21,7 +21,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size++;
     }
 
-    public Resume doGet(Object searchKey) {
+    public Resume doGet(Integer searchKey) {
         int index = (int) searchKey;
         return storage[index];
     }
@@ -30,14 +30,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.asList(Arrays.copyOf(storage, size));
     }
 
-    public void doUpdate(Resume resume, Object searchKey) {
-        int index = (int) searchKey;
-        storage[index] = resume;
+    public void doUpdate(Resume resume, Integer searchKey) {
+        storage[searchKey] = resume;
     }
 
-    public void doDelete(Object searchKey) {
-        int index = (int) searchKey;
-        removeResume(index);
+    public void doDelete(Integer searchKey) {
+        removeResume(searchKey);
         size--;
     }
 
@@ -50,12 +48,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    protected boolean isExist(Object searchKey) {
-        int index = (int) searchKey;
-        return index >= 0;
+    protected boolean isExist(Integer searchKey) {
+        return searchKey >= 0;
     }
 
-    protected abstract void addResume(Resume resume, int index);
+    protected abstract void addResume(Resume resume, Integer searchKey);
 
-    protected abstract void removeResume(int index);
+    protected abstract void removeResume(Integer searchKey);
 }
