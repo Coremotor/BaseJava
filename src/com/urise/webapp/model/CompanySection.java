@@ -17,7 +17,9 @@ public class CompanySection extends AbstractSection {
 
     @Override
     public String toString() {
-        return "\nCompanySection: \n" + "{ companies: " + companies + " }";
+        return "CompanySection{" +
+                "companies=" + companies +
+                '}';
     }
 
     @Override

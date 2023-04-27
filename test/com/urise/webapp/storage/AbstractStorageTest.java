@@ -3,6 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exeption.ExistStorageException;
 import com.urise.webapp.exeption.NotExistStorageException;
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.model.ResumeTestData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,11 +26,11 @@ public abstract class AbstractStorageTest {
     protected static final String PERSON_6 = "Mac Book";
     protected static final String UUID_NOT_EXIST = "dummy";
     protected static final String UPDATE_UUID = "update";
-    protected final Resume RESUME_1 = new Resume(UUID_1, PERSON_1);
-    protected final Resume RESUME_2 = new Resume(UUID_2, PERSON_2);
-    protected final Resume RESUME_3 = new Resume(UUID_3, PERSON_3);
-    protected final Resume RESUME_4 = new Resume(UUID_4, PERSON_4);
-    protected final Resume UPDATE_RESUME = new Resume(UPDATE_UUID, PERSON_5);
+    protected final Resume RESUME_1 = ResumeTestData.getResume(UUID_1, PERSON_1);
+    protected final Resume RESUME_2 = ResumeTestData.getResume(UUID_2, PERSON_2);
+    protected final Resume RESUME_3 = ResumeTestData.getResume(UUID_3, PERSON_3);
+    protected final Resume RESUME_4 = ResumeTestData.getResume(UUID_4, PERSON_4);
+    protected final Resume UPDATE_RESUME = ResumeTestData.getResume(UPDATE_UUID, PERSON_5);
     protected final Storage storage;
 
     public AbstractStorageTest(Storage storage) {

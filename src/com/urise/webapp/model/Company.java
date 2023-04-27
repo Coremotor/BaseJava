@@ -92,7 +92,12 @@ public class Company {
 
         @Override
         public String toString() {
-            return "\nPeriod: \n" + "{ startDate: " + startDate + " }\n" + "{ endDate: " + endDate + " }\n" + "{ title: " + title + " }\n" + "{ description: " + description + " }";
+            return "Period{" +
+                    "startDate=" + startDate +
+                    ", endDate=" + endDate +
+                    ", title='" + title + '\'' +
+                    ", description='" + description + '\'' +
+                    '}';
         }
     }
 }

@@ -20,8 +20,14 @@ public class Resume {
         this.fullName = fullName;
     }
 
+    @Override
     public String toString() {
-        return "{ uuid: " + uuid + ", fullName: " + fullName + " }";
+        return "Resume{" +
+                "uuid='" + uuid + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", contacts=" + contacts +
+                ", sections=" + sections +
+                '}';
     }
 
     public String getUuid() {

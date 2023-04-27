@@ -7,8 +7,20 @@ import java.util.List;
 import java.util.Map;
 
 public class ResumeTestData {
-    public static void main(String[] args) {
-        Resume resume = new Resume("Григорий Кислин");
+    public static EnumMap<ContactsType, String> getContacts() {
+        return new EnumMap<>(ContactsType.class) {{
+            put(ContactsType.PHONE, "+7(921) 855-0482");
+            put(ContactsType.SKYPE, "skype:grigory.kislin");
+            put(ContactsType.EMAIL, "gkislin@yandex.ru");
+            put(ContactsType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
+            put(ContactsType.GITHUB, "https://github.com/gkislin");
+            put(ContactsType.STACKOVERFLOW, "https://stackoverflow.com/users/548473/grigory-kislin");
+            put(ContactsType.HOME_PAGE, "https://gkislin.ru/");
+        }};
+    }
+
+    public static Resume getResume(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
         Map<SectionsType, AbstractSection> sections = new EnumMap<>(SectionsType.class);
         List<String> textAchievements = new ArrayList<>() {{
             add("Организация команды и успешная реализация Java проектов для сторонних заказчиков: приложения " +
@@ -29,7 +41,7 @@ public class ResumeTestData {
             add("Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов (SOA-base " +
                     "архитектура, JAX-WS, JMS, AS Glassfish). Сбор статистики сервисов и информации о состоянии через" +
                     " систему мониторинга Nagios. Реализация онлайн клиента для администрирования и мониторинга " +
-                    "системы по JMX (Jython/ Django).");
+                    "системы по JMX (Python/ Django).");
             add("Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, " +
                     "Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
         }};
@@ -114,17 +126,7 @@ public class ResumeTestData {
         for (SectionsType section : SectionsType.values()) {
             System.out.println(resume.getSection(section));
         }
-    }
 
-    public static EnumMap<ContactsType, String> getContacts() {
-        return new EnumMap<>(ContactsType.class) {{
-            put(ContactsType.PHONE, "+7(921) 855-0482");
-            put(ContactsType.SKYPE, "skype:grigory.kislin");
-            put(ContactsType.EMAIL, "gkislin@yandex.ru");
-            put(ContactsType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
-            put(ContactsType.GITHUB, "https://github.com/gkislin");
-            put(ContactsType.STACKOVERFLOW, "https://stackoverflow.com/users/548473/grigory-kislin");
-            put(ContactsType.HOME_PAGE, "http://gkislin.ru/");
-        }};
+        return resume;
     }
 }
