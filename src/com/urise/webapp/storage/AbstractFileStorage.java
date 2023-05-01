@@ -14,14 +14,16 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     private final File directory;
 
     protected AbstractFileStorage(File directory) {
-        Objects.requireNonNull(directory, "directory cannot be null");
+        Objects.requireNonNull(directory, "Directory cannot be null");
         checkDirectory(directory);
         this.directory = directory;
 
     }
 
     protected void doDelete(File file) {
-        file.delete();
+        if (!file.delete()) {
+            throw new StorageException("File not deleted", file.getName());
+        }
     }
 
     protected Resume doGet(File file) {
@@ -34,7 +36,10 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     protected List<Resume> doGetStorage() {
         List<Resume> res = new ArrayList<>();
-        for (File file : Objects.requireNonNull(this.directory.listFiles())) {
+        if (directory.listFiles() == null) {
+            throw new StorageException("Files not found", "");
+        }
+        for (File file : directory.listFiles()) {
             res.add(doGet(file));
         }
         return res;
@@ -66,13 +71,19 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     public void clear() {
-        for (File file : Objects.requireNonNull(directory.listFiles())) {
-            file.delete();
+        if (directory.listFiles() == null) {
+            throw new StorageException("Files not found", "");
+        }
+        for (File file : directory.listFiles()) {
+            doDelete(file);
         }
     }
 
     public int size() {
-        return Objects.requireNonNull(directory.list()).length;
+        if (directory.listFiles() == null) {
+            throw new StorageException("Files not found", "");
+        }
+        return directory.list().length;
     }
 
     private void checkDirectory(File directory) {

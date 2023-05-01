@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.urise.webapp.model.ResumeTestData.getResume;
+
 public abstract class AbstractStorageTest {
 
     protected static final String UUID_1 = "uuid1";
@@ -26,11 +28,11 @@ public abstract class AbstractStorageTest {
     protected static final String PERSON_6 = "Mac Book";
     protected static final String UUID_NOT_EXIST = "dummy";
     protected static final String UPDATE_UUID = "update";
-    protected final Resume RESUME_1 = ResumeTestData.getResume(UUID_1, PERSON_1);
-    protected final Resume RESUME_2 = ResumeTestData.getResume(UUID_2, PERSON_2);
-    protected final Resume RESUME_3 = ResumeTestData.getResume(UUID_3, PERSON_3);
-    protected final Resume RESUME_4 = ResumeTestData.getResume(UUID_4, PERSON_4);
-    protected final Resume UPDATE_RESUME = ResumeTestData.getResume(UPDATE_UUID, PERSON_5);
+    protected final Resume RESUME_1 = getResume(UUID_1, PERSON_1);
+    protected final Resume RESUME_2 = getResume(UUID_2, PERSON_2);
+    protected final Resume RESUME_3 = getResume(UUID_3, PERSON_3);
+    protected final Resume RESUME_4 = getResume(UUID_4, PERSON_4);
+    protected final Resume UPDATE_RESUME = getResume(UPDATE_UUID, PERSON_5);
     protected final Storage storage;
 
     public AbstractStorageTest(Storage storage) {
