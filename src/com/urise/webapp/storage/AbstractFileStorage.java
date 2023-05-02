@@ -35,11 +35,12 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     protected List<Resume> doGetStorage() {
+        File[] list = directory.listFiles();
         List<Resume> res = new ArrayList<>();
-        if (directory.listFiles() == null) {
+        if (list == null) {
             throw new StorageException("Files not found", "");
         }
-        for (File file : directory.listFiles()) {
+        for (File file : list) {
             res.add(doGet(file));
         }
         return res;
@@ -71,19 +72,21 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     public void clear() {
-        if (directory.listFiles() == null) {
+        File[] list = directory.listFiles();
+        if (list == null) {
             throw new StorageException("Files not found", "");
         }
-        for (File file : directory.listFiles()) {
+        for (File file : list) {
             doDelete(file);
         }
     }
 
     public int size() {
-        if (directory.listFiles() == null) {
+        File[] list = directory.listFiles();
+        if (list == null) {
             throw new StorageException("Files not found", "");
         }
-        return directory.list().length;
+        return list.length;
     }
 
     private void checkDirectory(File directory) {
