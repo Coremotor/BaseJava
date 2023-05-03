@@ -6,7 +6,7 @@ import java.util.Objects;
 public class MainFiles {
 
     private static final StringBuilder string = new StringBuilder();
-    private static final String addString = "/  ";
+    private static final String addString = "- ";
 
     public static void main(String[] args) {
         String path = "./src/";
@@ -21,7 +21,7 @@ public class MainFiles {
                 string.append(addString);
                 printNameFiles(item);
             } else {
-                System.out.println(item.getName());
+                System.out.println(string + item.getName());
             }
         }
 
