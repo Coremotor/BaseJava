@@ -2,6 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.storageSerializer.Serializer;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,13 +11,13 @@ import java.util.Objects;
 
 public class FileStorage extends AbstractStorage<File> {
     private final File directory;
-    private final StreamStorageSerializer streamStorageSerializer;
+    private final Serializer serializer;
 
-    protected FileStorage(File directory, StreamStorageSerializer streamStorageSerializer) {
+    protected FileStorage(File directory, Serializer streamStorageSerializer) {
         Objects.requireNonNull(directory, "Directory cannot be null");
         checkDirectory(directory);
         this.directory = directory;
-        this.streamStorageSerializer = streamStorageSerializer;
+        this.serializer = streamStorageSerializer;
 
     }
 
@@ -30,7 +31,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected Resume doGet(File file) {
         try {
-            return streamStorageSerializer.doRead(new BufferedInputStream(new FileInputStream(file)));
+            return serializer.doRead(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -49,7 +50,7 @@ public class FileStorage extends AbstractStorage<File> {
     protected void doSave(Resume r, File file) {
         try {
             file.createNewFile();
-            streamStorageSerializer.doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
+            serializer.doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -68,7 +69,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected void doUpdate(Resume r, File file) {
         try {
-            streamStorageSerializer.doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
+            serializer.doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
