@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class PathStorage extends AbstractStorage<Path> {
     private final Path directory;
@@ -45,14 +46,9 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected List<Resume> doGetStorage() {
         List<Resume> res = new ArrayList<>();
-        try {
-            for (Path Path : Files.list(directory).toList()) {
-                res.add(doGet(Path));
-            }
-        } catch (IOException e) {
-            throw new StorageException("Error read storage", null);
+        for (Path Path : getStorageList().toList()) {
+            res.add(doGet(Path));
         }
-
         return res;
     }
 
@@ -86,17 +82,17 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     public void clear() {
-        try {
-            Files.list(directory).forEach(this::doDelete);
-        } catch (IOException e) {
-            throw new StorageException("Path delete error", null);
-        }
+        getStorageList().forEach(this::doDelete);
     }
 
     @Override
     public int size() {
+        return (int) getStorageList().count();
+    }
+
+    private Stream<Path> getStorageList() {
         try {
-            return Files.list(directory).toList().size();
+            return Files.list(directory);
         } catch (IOException e) {
             throw new StorageException("Directory read error", null);
         }
