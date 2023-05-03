@@ -1,90 +1,94 @@
 package com.urise.webapp.storage;
 
-
 import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
+public class FileStorage extends AbstractStorage<File> {
     private final File directory;
+    private final StreamStorageSerializer streamStorageSerializer;
 
-    protected AbstractFileStorage(File directory) {
+    protected FileStorage(File directory, StreamStorageSerializer streamStorageSerializer) {
         Objects.requireNonNull(directory, "Directory cannot be null");
         checkDirectory(directory);
         this.directory = directory;
+        this.streamStorageSerializer = streamStorageSerializer;
 
     }
 
+    @Override
     protected void doDelete(File file) {
         if (!file.delete()) {
             throw new StorageException("File not deleted", file.getName());
         }
     }
 
+    @Override
     protected Resume doGet(File file) {
         try {
-            return doRead(file);
+            return streamStorageSerializer.doRead(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
     }
 
+    @Override
     protected List<Resume> doGetStorage() {
-        File[] list = directory.listFiles();
         List<Resume> res = new ArrayList<>();
-        if (list == null) {
-            throw new StorageException("Files not found", "");
-        }
-        for (File file : list) {
+        for (File file : Objects.requireNonNull(this.directory.listFiles())) {
             res.add(doGet(file));
         }
         return res;
     }
 
+    @Override
     protected void doSave(Resume r, File file) {
         try {
             file.createNewFile();
-            doWrite(r, file);
+            streamStorageSerializer.doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
     }
 
+    @Override
     protected boolean isExist(File file) {
         return file.exists();
     }
 
+    @Override
     protected File getSearchKey(String uuid) {
         return new File(directory, uuid);
     }
 
+    @Override
     protected void doUpdate(Resume r, File file) {
         try {
-            doWrite(r, file);
+            streamStorageSerializer.doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
     }
 
+    @Override
     public void clear() {
-        File[] list = directory.listFiles();
-        if (list == null) {
-            throw new StorageException("Files not found", "");
-        }
-        for (File file : list) {
-            doDelete(file);
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                doDelete(file);
+            }
         }
     }
 
+    @Override
     public int size() {
-        File[] list = directory.listFiles();
+        String[] list = directory.list();
         if (list == null) {
-            throw new StorageException("Files not found", "");
+            throw new StorageException("Directory read error", null);
         }
         return list.length;
     }
@@ -97,8 +101,4 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             throw new IllegalArgumentException(directory.getAbsolutePath() + "is not a readable/writable");
         }
     }
-
-    protected abstract void doWrite(Resume r, File file) throws IOException;
-
-    protected abstract Resume doRead(File file) throws IOException;
 }

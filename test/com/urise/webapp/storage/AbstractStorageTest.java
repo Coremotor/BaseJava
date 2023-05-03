@@ -3,11 +3,11 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exeption.ExistStorageException;
 import com.urise.webapp.exeption.NotExistStorageException;
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.model.ResumeTestData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +34,7 @@ public abstract class AbstractStorageTest {
     protected final Resume RESUME_4 = getResume(UUID_4, PERSON_4);
     protected final Resume UPDATE_RESUME = getResume(UPDATE_UUID, PERSON_5);
     protected final Storage storage;
+    protected static final File STORAGE_DIR = new File("./src/com/urise/webapp/storageDir");
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -58,7 +59,7 @@ public abstract class AbstractStorageTest {
     void update() {
         storage.save(UPDATE_RESUME);
         storage.update(UPDATE_RESUME);
-        Assertions.assertSame(UPDATE_RESUME, storage.get(UPDATE_UUID));
+        Assertions.assertEquals(UPDATE_RESUME, storage.get(UPDATE_UUID));
     }
 
     @Test

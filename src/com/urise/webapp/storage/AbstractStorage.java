@@ -77,5 +77,3 @@ public abstract class AbstractStorage<T> implements Storage {
 
     protected abstract T getSearchKey(String uuid);
 }
-
-
