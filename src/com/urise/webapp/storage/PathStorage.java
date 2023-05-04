@@ -8,9 +8,9 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PathStorage extends AbstractStorage<Path> {
@@ -46,21 +46,12 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected List<Resume> doGetStorage() {
-//        List<Resume> res = new ArrayList<>();
-//        for (Path Path : getStorageList().toList()) {
-//            res.add(doGet(Path));
-//        }
-//        return res;
-        return getStorageList().map(this::doGet).toList();
+        return getStorageList().map(this::doGet).collect(Collectors.toList());
     }
 
     @Override
     protected void doSave(Resume r, Path path) {
-        try {
-            serializer.doWrite(r, new BufferedOutputStream(new FileOutputStream(path.toFile())));
-        } catch (IOException e) {
-            throw new StorageException("IO error", path.getFileName().toString(), e);
-        }
+        doUpdate(r, path);
     }
 
     @Override
