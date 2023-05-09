@@ -1,19 +1,26 @@
 package com.urise.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Resume implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private final String uuid;
-    private final String fullName;
-    private Map<ContactsType, String> contacts;
-    private Map<SectionsType, AbstractSection> sections;
+    private String uuid;
+    private String fullName;
+    private Map<ContactsType, String> contacts = new EnumMap<>(ContactsType.class);
+    private Map<SectionsType, AbstractSection> sections = new EnumMap<>(SectionsType.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -22,6 +29,9 @@ public class Resume implements Serializable {
     public Resume(String uuid, String fullName) {
         this.uuid = uuid;
         this.fullName = fullName;
+    }
+
+    public Resume() {
     }
 
     @Override
@@ -38,6 +48,18 @@ public class Resume implements Serializable {
         return uuid;
     }
 
+    public Map<ContactsType, String> getContacts() {
+        return contacts;
+    }
+
+    public void addContact(ContactsType contact, String value) {
+        contacts.put(contact, value);
+    }
+
+    public void addSection(SectionsType sectionsType, AbstractSection section) {
+        sections.put(sectionsType, section);
+    }
+
     public String getFullName() {
         return fullName;
     }
@@ -48,6 +70,10 @@ public class Resume implements Serializable {
 
     public AbstractSection getSection(SectionsType sectionsType) {
         return sections.get(sectionsType);
+    }
+
+    public Map<SectionsType, AbstractSection> getSections() {
+        return sections;
     }
 
     public void setContacts(Map<ContactsType, String> contacts) {
@@ -63,10 +89,12 @@ public class Resume implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Resume resume = (Resume) o;
         return Objects.equals(uuid, resume.uuid)
-                && Objects.equals(fullName, resume.fullName);
+                && Objects.equals(fullName, resume.fullName)
+                && Objects.equals(contacts, resume.contacts)
+                && Objects.equals(sections, resume.sections);
     }
 
     public int hashCode() {
-        return Objects.hash(uuid, fullName);
+        return Objects.hash(uuid, fullName, contacts, sections);
     }
 }

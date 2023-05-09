@@ -7,10 +7,13 @@ import java.util.Objects;
 public class CompanySection extends AbstractSection {
     @Serial
     private static final long serialVersionUID = 1L;
-    private final List<Company> companies;
+    private List<Company> companies;
 
     public CompanySection(List<Company> companies) {
         this.companies = companies;
+    }
+
+    public CompanySection() {
     }
 
     public List<Company> getCompanies() {

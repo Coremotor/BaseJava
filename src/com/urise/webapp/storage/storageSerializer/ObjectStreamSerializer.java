@@ -2,7 +2,6 @@ package com.urise.webapp.storage.storageSerializer;
 
 import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.storageSerializer.Serializer;
 
 import java.io.*;
 

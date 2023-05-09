@@ -7,10 +7,13 @@ import java.util.Objects;
 public class ListSection extends AbstractSection {
     @Serial
     private static final long serialVersionUID = 1L;
-    private final List<String> sections;
+    private List<String> sections;
 
     public ListSection(List<String> sections) {
         this.sections = sections;
+    }
+
+    public ListSection() {
     }
 
     public List<String> getSections() {

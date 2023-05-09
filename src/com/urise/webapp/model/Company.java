@@ -1,21 +1,30 @@
 package com.urise.webapp.model;
 
+import com.urise.webapp.util.LocalDateXmlAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Company implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    private final List<Period> periods;
-    private final String name;
-    private String website;
+    private List<Period> periods;
+    private String name;
+    private String website = "";
 
     public Company(String name, List<Period> periods) {
         this.name = name;
         this.periods = periods;
+    }
+
+    public Company() {
     }
 
     public List<Period> getPeriods() {
@@ -52,13 +61,19 @@ public class Company implements Serializable {
         return "\nCompany: \n" + "{ periods: " + periods + " }\n" + "{ name: " + name + " }\n" + "{ website: " + website + " }";
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Period implements Serializable {
         @Serial
         private static final long serialVersionUID = 1L;
-        final private LocalDate startDate;
-        final private LocalDate endDate;
-        final private String title;
-        final private String description;
+        @XmlJavaTypeAdapter(LocalDateXmlAdapter.class)
+        public LocalDate startDate;
+        @XmlJavaTypeAdapter(LocalDateXmlAdapter.class)
+        public LocalDate endDate;
+        public String title;
+        public String description;
+
+        public Period() {
+        }
 
         public Period(LocalDate startDate, LocalDate endDate, String title, String description) {
             this.startDate = startDate;
