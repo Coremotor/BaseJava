@@ -10,6 +10,7 @@ public class ListSection extends AbstractSection {
     private List<String> sections;
 
     public ListSection(List<String> sections) {
+        Objects.requireNonNull(sections, "contentList cannot be null");
         this.sections = sections;
     }
 

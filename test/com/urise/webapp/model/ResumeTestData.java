@@ -74,13 +74,13 @@ public class ResumeTestData {
                 "Инженер по аппаратному и программному тестированию.", "Тестирование, отладка, внедрение ПО цифровой " +
                 "телефонной станции Alcatel 1000 S12\" +\n" +
                 "\" (CHILL, ASM)..\"");
-        Company company1 = new Company("Alcatel", List.of(companyPeriod1));
+        Company company1 = new Company("Alcatel","", List.of(companyPeriod1));
         company1.setWebsite("http://www.alcatel.ru/");
 
         Company.Period companyPeriod2 = new Company.Period(LocalDate.of(2005, 1, 1), LocalDate.of(2008, 6, 1),
                 "Разработчик ПО", "Разработка информационной модели, проектирование интерфейсов, реализация и " +
                 "отладка ПО на мобильной IN платформе Siemens @vantage (Java, Unix).");
-        Company company2 = new Company("Siemens AG", List.of(companyPeriod2));
+        Company company2 = new Company("Siemens AG","", List.of(companyPeriod2));
         List<Company> listCompanies = new ArrayList<>() {{
             add(company1);
             add(company2);
@@ -88,7 +88,7 @@ public class ResumeTestData {
 
         Company.Period educationPeriod1 = new Company.Period(LocalDate.of(1984, 9, 1), LocalDate.of(1987, 6, 1),
                 "Закончил с отличием", "");
-        Company education = new Company("Заочная физико-техническая школа при МФТИ", List.of(educationPeriod1));
+        Company education = new Company("Заочная физико-техническая школа при МФТИ","", List.of(educationPeriod1));
 
         Company.Period educationPeriod2 = new Company.Period(LocalDate.of(1993, 9, 1), LocalDate.of(1996, 7, 1),
                 "Аспирантура (программист С, С++)", "");
@@ -96,7 +96,7 @@ public class ResumeTestData {
                 "Инженер (программист Fortran, C)", "");
 
         Company education2 = new Company("Санкт-Петербургский национальный исследовательский университет " +
-                "информационных технологий, механики и оптики", List.of(educationPeriod2, educationPeriod3));
+                "информационных технологий, механики и оптики","", List.of(educationPeriod2, educationPeriod3));
 
         List<Company> listEducations = new ArrayList<>() {{
             add(education);

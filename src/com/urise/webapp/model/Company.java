@@ -17,11 +17,14 @@ public class Company implements Serializable {
     private static final long serialVersionUID = 1L;
     private List<Period> periods;
     private String name;
-    private String website = "";
+    private String website;
 
-    public Company(String name, List<Period> periods) {
+    public Company(String name, String website, List<Period> periods) {
+        Objects.requireNonNull(periods, "periods cannot be null");
+        Objects.requireNonNull(name, "name cannot be null");
         this.name = name;
         this.periods = periods;
+        this.website = website == null ? "" : website;
     }
 
     public Company() {
@@ -76,6 +79,11 @@ public class Company implements Serializable {
         }
 
         public Period(LocalDate startDate, LocalDate endDate, String title, String description) {
+            Objects.requireNonNull(startDate, "startDate cannot be null");
+            Objects.requireNonNull(endDate, "endDate cannot be null");
+            Objects.requireNonNull(title, "title cannot be null");
+            Objects.requireNonNull(description, "description cannot be null");
+
             this.startDate = startDate;
             this.endDate = endDate;
             this.title = title;

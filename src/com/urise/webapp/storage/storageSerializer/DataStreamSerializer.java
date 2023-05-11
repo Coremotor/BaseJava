@@ -67,28 +67,11 @@ public class DataStreamSerializer implements Serializer {
         return switch (section) {
             case PERSONAL, OBJECTIVE -> new TextSection(is.readUTF());
             case ACHIEVEMENT, QUALIFICATIONS -> new ListSection(readList(is, is::readUTF));
-            case EXPERIENCE, EDUCATION -> {
-                List<Company> companies = new ArrayList<>();
-                int numberCompanies = is.readInt();
-                for (int i = 0; i < numberCompanies; i++) {
-                    String orgName = is.readUTF();
-                    String orgWebsite = is.readUTF();
-                    List<Company.Period> periods = new ArrayList<>();
-
-                    int size = is.readInt();
-                    for (int j = 0; j < size; j++) {
-                        LocalDate start = getLocalDate(is);
-                        LocalDate end = getLocalDate(is);
-                        String title = is.readUTF();
-                        String description = is.readUTF();
-                        periods.add(new Company.Period(start, end, title, description));
-                    }
-                    Company company = new Company(orgName, periods);
-                    company.setWebsite(orgWebsite);
-                    companies.add(company);
-                }
-                yield new CompanySection(companies);
-            }
+            case EXPERIENCE, EDUCATION -> new CompanySection(readList(is, () -> new Company(
+                    is.readUTF(), is.readUTF(), readList(is, () -> new Company.Period(
+                    getLocalDate(is), getLocalDate(is), is.readUTF(), is.readUTF()
+            ))
+            )));
         };
     }
 
