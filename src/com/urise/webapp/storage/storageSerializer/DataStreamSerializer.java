@@ -3,6 +3,7 @@ package com.urise.webapp.storage.storageSerializer;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.model.ContactsType;
 import com.urise.webapp.model.*;
+import jdk.jfr.Frequency;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -107,14 +108,17 @@ public class DataStreamSerializer implements Serializer {
         return LocalDate.of(is.readInt(), is.readInt(), 1);
     }
 
+    @FunctionalInterface
     private interface Reader {
         void read() throws IOException;
     }
 
+    @FunctionalInterface
     private interface GetRead<T> {
         T getRead() throws IOException;
     }
 
+    @FunctionalInterface
     private interface Writer<T> {
         void write(T t) throws IOException;
     }
