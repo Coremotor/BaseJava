@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.Config;
 import com.urise.webapp.exeption.ExistStorageException;
 import com.urise.webapp.exeption.NotExistStorageException;
 import com.urise.webapp.model.Resume;
@@ -34,7 +35,7 @@ public abstract class AbstractStorageTest {
     protected final Resume RESUME_4 = getResume(UUID_4, PERSON_4);
     protected final Resume UPDATE_RESUME = getResume(UPDATE_UUID, PERSON_5);
     protected final Storage storage;
-    protected static final File STORAGE_DIR = new File("./src/com/urise/webapp/storageDir");
+    protected static final File STORAGE_DIR = Config.get().getStorageDir();
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -49,7 +50,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    void clear() {
+    void clear() throws Exception {
         storage.clear();
         assertSize(0);
         Assertions.assertArrayEquals(storage.getAllSorted().toArray(), new Resume[0]);
@@ -68,7 +69,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    void get() {
+    void get() throws Exception {
         assertGet(RESUME_1);
         assertGet(RESUME_2);
         assertGet(RESUME_3);
@@ -87,7 +88,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    void save() {
+    void save() throws Exception {
         final int size = storage.size();
         storage.save(RESUME_4);
         Assertions.assertEquals(RESUME_4, storage.get(UUID_4));
@@ -101,7 +102,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    void delete() {
+    void delete() throws Exception {
         final int size = storage.size();
         storage.delete(UUID_1);
         assertSize(size - 1);
@@ -109,7 +110,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    void size() {
+    void size() throws Exception {
         assertSize(3);
     }
 

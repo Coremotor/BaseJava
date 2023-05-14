@@ -21,7 +21,7 @@ public class Stream {
                 .mapToInt(Integer::intValue)
                 .sum();
         return integers.stream()
-                .filter(n -> (sum % 2 == 0 && n % 2 == 0) || (sum % 2 != 0 && n % 2 != 0))
+                .filter(n -> (sum % 2 == 0 && n % 2 == 0) || (sum % 2 != 0 && n % 2 == 0))
                 .collect(Collectors.toList());
     }
 }
