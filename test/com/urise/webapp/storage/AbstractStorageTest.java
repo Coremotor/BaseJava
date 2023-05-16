@@ -12,15 +12,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static com.urise.webapp.model.ResumeTestData.getResume;
 
 public abstract class AbstractStorageTest {
 
-    protected static final String UUID_1 = "uuid1";
-    protected static final String UUID_2 = "uuid2";
-    protected static final String UUID_3 = "uuid3";
-    protected static final String UUID_4 = "uuid4";
+    protected static final String UUID_1 = getRandomUuid();
+    protected static final String UUID_2 = getRandomUuid();
+    protected static final String UUID_3 = getRandomUuid();
+    protected static final String UUID_4 = getRandomUuid();
     protected static final String PERSON_1 = "Dog Bobby";
     protected static final String PERSON_2 = "Cat Tom";
     protected static final String PERSON_3 = "Fish Gold";
@@ -39,6 +40,10 @@ public abstract class AbstractStorageTest {
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
+    }
+
+    private static String getRandomUuid() {
+        return UUID.randomUUID().toString();
     }
 
     @BeforeEach

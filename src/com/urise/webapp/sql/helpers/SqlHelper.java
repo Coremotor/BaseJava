@@ -14,15 +14,6 @@ public class SqlHelper {
         this.connectionFactory = connectionFactory;
     }
 
-    public PreparedStatement getPreparedStatement(String sql) {
-        try (Connection conn = connectionFactory.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            return ps;
-        } catch (SQLException e) {
-            throw new StorageException(e);
-        }
-    }
-
     public void execute(String sql) {
         execute(sql, PreparedStatement::execute);
     }
@@ -32,8 +23,7 @@ public class SqlHelper {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             return executor.execute(ps);
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            throw new StorageException(e);
         }
     }
 }
