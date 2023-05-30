@@ -117,7 +117,7 @@ public class ResumeTestData {
         sections.put(SectionsType.EDUCATION, new CompanySection(listEducations));
 
         resume.setContacts(getContacts());
-//        resume.setSections(sections);
+        resume.setSections(sections);
 
         for (ContactsType contact : ContactsType.values()) {
             System.out.println(resume.getContacts(contact));
