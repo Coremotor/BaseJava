@@ -67,7 +67,9 @@ public class Resume implements Serializable {
     public String getContacts(ContactsType contactsType) {
         return contacts.get(contactsType);
     }
-
+    public String getContact(ContactsType contactsType) {
+        return contacts.get(contactsType);
+    }
     public AbstractSection getSection(SectionsType sectionsType) {
         return sections.get(sectionsType);
     }
