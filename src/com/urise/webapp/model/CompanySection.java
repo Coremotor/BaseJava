@@ -1,20 +1,22 @@
 package com.urise.webapp.model;
 
 import java.io.Serial;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class CompanySection extends AbstractSection {
+public class CompanySection extends Section {
     @Serial
     private static final long serialVersionUID = 1L;
-    private List<Company> companies;
+    private final List<Company> companies;
 
     public CompanySection(List<Company> companies) {
         Objects.requireNonNull(companies, "companies cannot be null");
         this.companies = companies;
     }
 
-    public CompanySection() {
+    public CompanySection(Company... organizations) {
+        this(Arrays.asList(organizations));
     }
 
     public List<Company> getCompanies() {

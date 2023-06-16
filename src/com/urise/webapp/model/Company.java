@@ -8,11 +8,13 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Company implements Serializable {
+    public static final Company EMPTY = new Company("", "", Period.EMPTY);
     @Serial
     private static final long serialVersionUID = 1L;
     private List<Period> periods;
@@ -25,6 +27,10 @@ public class Company implements Serializable {
         this.name = name;
         this.periods = periods;
         this.website = website == null ? "" : website;
+    }
+
+    public Company(String name, String website, Period... periods) {
+        this(name, website, Arrays.asList(periods));
     }
 
     public Company() {
@@ -66,6 +72,7 @@ public class Company implements Serializable {
 
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Period implements Serializable {
+        public static final Period EMPTY = new Period();
         @Serial
         private static final long serialVersionUID = 1L;
         @XmlJavaTypeAdapter(LocalDateXmlAdapter.class)
@@ -111,7 +118,10 @@ public class Company implements Serializable {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Period period = (Period) o;
-            return Objects.equals(startDate, period.startDate) && Objects.equals(endDate, period.endDate) && Objects.equals(title, period.title) && Objects.equals(description, period.description);
+            return Objects.equals(startDate, period.startDate)
+                    && Objects.equals(endDate, period.endDate)
+                    && Objects.equals(title, period.title)
+                    && Objects.equals(description, period.description);
         }
 
         @Override

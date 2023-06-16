@@ -1,6 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.urise.webapp.model.ContactsType" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="ru">
 <head>
@@ -15,6 +15,8 @@
 <div class="wrapper">
     <jsp:include page="fragments/header.jsp"/>
     <div class="content">
+        <a href="resume?action=add"><img src="img/add.png"></a>
+        <br>
         <table>
             <tr>
                 <th>Full name</th>

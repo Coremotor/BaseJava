@@ -3,7 +3,8 @@ package com.urise.webapp.model;
 import java.io.Serial;
 import java.util.Objects;
 
-public class TextSection extends AbstractSection {
+public class TextSection extends Section {
+    public static final TextSection EMPTY = new TextSection("");
     @Serial
     private static final long serialVersionUID = 1L;
     private String content;
@@ -35,8 +36,6 @@ public class TextSection extends AbstractSection {
 
     @Override
     public String toString() {
-        return "TextSection{" +
-                "content='" + content + '\'' +
-                '}';
+        return content;
     }
 }

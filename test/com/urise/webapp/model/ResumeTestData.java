@@ -6,6 +6,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class ResumeTestData {
     public static EnumMap<ContactsType, String> getContacts() {
         return new EnumMap<>(ContactsType.class) {{
@@ -15,13 +16,13 @@ public class ResumeTestData {
             put(ContactsType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
             put(ContactsType.GITHUB, "https://github.com/gkislin");
             put(ContactsType.STACKOVERFLOW, "https://stackoverflow.com/users/548473/grigory-kislin");
-            put(ContactsType.HOME_PAGE, "https://gkislin.ru/");
+            put(ContactsType.HOME_PAGE, "http://gkislin.ru/");
         }};
     }
 
     public static Resume getResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
-        Map<SectionsType, AbstractSection> sections = new EnumMap<>(SectionsType.class);
+        Map<SectionsType, Section> sections = new EnumMap<>(SectionsType.class);
         List<String> textAchievements = new ArrayList<>() {{
             add("Организация команды и успешная реализация Java проектов для сторонних заказчиков: приложения " +
                     "автопарк на стеке Spring Cloud/микросервисы, система мониторинга показателей спортсменов на " +
@@ -41,7 +42,7 @@ public class ResumeTestData {
             add("Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов (SOA-base " +
                     "архитектура, JAX-WS, JMS, AS Glassfish). Сбор статистики сервисов и информации о состоянии через" +
                     " систему мониторинга Nagios. Реализация онлайн клиента для администрирования и мониторинга " +
-                    "системы по JMX (Python/ Django).");
+                    "системы по JMX (Jython/ Django).");
             add("Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, " +
                     "Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
         }};
@@ -73,14 +74,13 @@ public class ResumeTestData {
         Company.Period companyPeriod1 = new Company.Period(LocalDate.of(1997, 9, 1), LocalDate.of(2005, 1, 1),
                 "Инженер по аппаратному и программному тестированию.", "Тестирование, отладка, внедрение ПО цифровой " +
                 "телефонной станции Alcatel 1000 S12\" +\n" +
-                "\" (CHILL, ASM)..\"");
-        Company company1 = new Company("Alcatel","", List.of(companyPeriod1));
-        company1.setWebsite("http://www.alcatel.ru/");
+                "                            \" (CHILL, ASM)..\"");
+        Company company1 = new Company("Alcatel", "http://www.alcatel.ru/", List.of(companyPeriod1));
 
         Company.Period companyPeriod2 = new Company.Period(LocalDate.of(2005, 1, 1), LocalDate.of(2008, 6, 1),
                 "Разработчик ПО", "Разработка информационной модели, проектирование интерфейсов, реализация и " +
                 "отладка ПО на мобильной IN платформе Siemens @vantage (Java, Unix).");
-        Company company2 = new Company("Siemens AG","", List.of(companyPeriod2));
+        Company company2 = new Company("Siemens AG", "", List.of(companyPeriod2));
         List<Company> listCompanies = new ArrayList<>() {{
             add(company1);
             add(company2);
@@ -88,7 +88,7 @@ public class ResumeTestData {
 
         Company.Period educationPeriod1 = new Company.Period(LocalDate.of(1984, 9, 1), LocalDate.of(1987, 6, 1),
                 "Закончил с отличием", "");
-        Company education = new Company("Заочная физико-техническая школа при МФТИ","", List.of(educationPeriod1));
+        Company education = new Company("Заочная физико-техническая школа при МФТИ", "", List.of(educationPeriod1));
 
         Company.Period educationPeriod2 = new Company.Period(LocalDate.of(1993, 9, 1), LocalDate.of(1996, 7, 1),
                 "Аспирантура (программист С, С++)", "");
@@ -96,16 +96,16 @@ public class ResumeTestData {
                 "Инженер (программист Fortran, C)", "");
 
         Company education2 = new Company("Санкт-Петербургский национальный исследовательский университет " +
-                "информационных технологий, механики и оптики","", List.of(educationPeriod2, educationPeriod3));
+                "информационных технологий, механики и оптики", "", List.of(educationPeriod2, educationPeriod3));
 
         List<Company> listEducations = new ArrayList<>() {{
             add(education);
             add(education2);
         }};
 
-        AbstractSection objectiveText = new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и " +
+        Section objectiveText = new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и " +
                 "Enterprise технологиям");
-        AbstractSection personalText = new TextSection("Аналитический склад ума, сильная логика, " +
+        Section personalText = new TextSection("Аналитический склад ума, сильная логика, " +
                 "креативность, инициативность. Пурист кода и архитектуры");
 
 
@@ -120,7 +120,7 @@ public class ResumeTestData {
         resume.setSections(sections);
 
         for (ContactsType contact : ContactsType.values()) {
-            System.out.println(resume.getContacts(contact));
+            System.out.println(resume.getContact(contact));
         }
 
         for (SectionsType section : SectionsType.values()) {

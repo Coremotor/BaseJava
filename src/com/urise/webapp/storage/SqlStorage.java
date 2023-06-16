@@ -3,7 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exeption.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.model.ContactsType;
-import com.urise.webapp.model.AbstractSection;
+import com.urise.webapp.model.Section;
 import com.urise.webapp.model.SectionsType;
 import com.urise.webapp.sql.helpers.SqlHelper;
 import com.urise.webapp.util.JsonParser;
@@ -162,11 +162,11 @@ public class SqlStorage implements Storage {
 
     private void insertSections(Connection conn, Resume resume) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement("INSERT INTO section (resume_uuid, type, content) VALUES (?,?,?)")) {
-            for (Map.Entry<SectionsType, AbstractSection> e : resume.getSections().entrySet()) {
+            for (Map.Entry<SectionsType, Section> e : resume.getSections().entrySet()) {
                 ps.setString(1, resume.getUuid());
                 ps.setString(2, e.getKey().name());
-                AbstractSection section = e.getValue();
-                ps.setString(3, JsonParser.write(section, AbstractSection.class));
+                Section section = e.getValue();
+                ps.setString(3, JsonParser.write(section, Section.class));
                 ps.addBatch();
             }
             ps.executeBatch();
@@ -200,7 +200,7 @@ public class SqlStorage implements Storage {
         String content = rs.getString("content");
         if (content != null) {
             SectionsType type = SectionsType.valueOf(rs.getString("type"));
-            r.addSection(type, JsonParser.read(content, AbstractSection.class));
+            r.addSection(type, JsonParser.read(content,Section.class));
         }
     }
 }

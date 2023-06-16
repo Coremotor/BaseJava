@@ -3,7 +3,6 @@ package com.urise.webapp.storage.storageSerializer;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.model.ContactsType;
 import com.urise.webapp.model.*;
-import jdk.jfr.Frequency;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -23,7 +22,7 @@ public class DataStreamSerializer implements Serializer {
             });
             writeObject(osOut, r.getSections().entrySet(), entry -> {
                 SectionsType sectionsType = entry.getKey();
-                AbstractSection section = entry.getValue();
+                Section section = entry.getValue();
                 osOut.writeUTF(sectionsType.name());
                 switch (sectionsType) {
                     case PERSONAL, OBJECTIVE -> {
@@ -64,7 +63,7 @@ public class DataStreamSerializer implements Serializer {
         }
     }
 
-    private AbstractSection getSection(DataInputStream is, SectionsType section) throws IOException {
+    private Section getSection(DataInputStream is, SectionsType section) throws IOException {
         return switch (section) {
             case PERSONAL, OBJECTIVE -> new TextSection(is.readUTF());
             case ACHIEVEMENT, QUALIFICATIONS -> new ListSection(readList(is, is::readUTF));
