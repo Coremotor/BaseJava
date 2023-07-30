@@ -4,7 +4,7 @@
 <%@ page import="com.urise.webapp.model.ListSection" %>
 <%@ page import="com.urise.webapp.model.CompanySection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
