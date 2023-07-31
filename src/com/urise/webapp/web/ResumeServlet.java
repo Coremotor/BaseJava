@@ -5,11 +5,11 @@ import com.urise.webapp.model.*;
 import com.urise.webapp.storage.Storage;
 import com.urise.webapp.util.DateUtil;
 import com.urise.webapp.util.HtmlUtil;
-import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
